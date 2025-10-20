@@ -651,18 +651,18 @@ impl<R: Read + Seek> EpubDoc<R> {
     /// # use epub::doc::EpubDoc;
     /// # let doc = EpubDoc::new("test.epub");
     /// # let mut doc = doc.unwrap();
-    /// assert_eq!(17, doc.get_num_pages());
+    /// assert_eq!(17, doc.get_num_chapters());
     /// ```
-    pub fn get_num_pages(&self) -> usize {
+    pub fn get_num_chapters(&self) -> usize {
         self.spine.len()
     }
 
     /// Returns the current chapter number, starting from 0
-    pub fn get_current_page(&self) -> usize {
+    pub fn get_current_chapter(&self) -> usize {
         self.current
     }
 
-    /// Changes the current page
+    /// Changes the current chapter
     ///
     /// # Examples
     ///
@@ -670,15 +670,15 @@ impl<R: Read + Seek> EpubDoc<R> {
     /// # use epub::doc::EpubDoc;
     /// # let doc = EpubDoc::new("test.epub");
     /// # let mut doc = doc.unwrap();
-    /// assert_eq!(0, doc.get_current_page());
-    /// doc.set_current_page(2);
+    /// assert_eq!(0, doc.get_current_chapter());
+    /// doc.set_current_chapter(2);
     /// assert_eq!("001.xhtml", doc.get_current_id().unwrap());
-    /// assert_eq!(2, doc.get_current_page());
-    /// assert!(!doc.set_current_page(50));
+    /// assert_eq!(2, doc.get_current_chapter());
+    /// assert!(!doc.set_current_chapter(50));
     /// ```
     ///
-    /// Returns [`false`] if the page is out of bounds
-    pub fn set_current_page(&mut self, n: usize) -> bool {
+    /// Returns [`false`] if the chapter is out of bounds
+    pub fn set_current_chapter(&mut self, n: usize) -> bool {
         if n >= self.spine.len() {
             false
         } else {
@@ -687,7 +687,7 @@ impl<R: Read + Seek> EpubDoc<R> {
         }
     }
 
-    /// This will inject this css in every html page getted with
+    /// This will inject arbitrary css into every queried html page 
     /// [`Self::get_current_with_epub_uris`]
     ///
     /// # Examples
@@ -696,7 +696,7 @@ impl<R: Read + Seek> EpubDoc<R> {
     /// # use epub::doc::EpubDoc;
     /// # let doc = EpubDoc::new("test.epub");
     /// # let mut doc = doc.unwrap();
-    /// # let _ = doc.set_current_page(2);
+    /// # let _ = doc.set_current_chapter(2);
     /// let extracss = "body { background-color: black; color: white }";
     /// doc.add_extra_css(extracss);
     /// let current = doc.get_current_with_epub_uris().unwrap();
