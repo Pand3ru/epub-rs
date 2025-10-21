@@ -657,10 +657,21 @@ impl<R: Read + Seek> EpubDoc<R> {
         self.spine.len()
     }
 
+    #[deprecated(note="please use `get_num_chapters` instead")]
+    pub fn get_num_pages(&self) -> usize {
+        self.get_num_chapters()
+    }
+
     /// Returns the current chapter number, starting from 0
     pub fn get_current_chapter(&self) -> usize {
         self.current
     }
+
+    #[deprecated(note="please use `get_current_chapter` instead")]
+    pub fn get_current_page(&self) -> usize {
+        self.get_current_chapter()
+    }
+
 
     /// Changes the current chapter
     ///
@@ -686,6 +697,12 @@ impl<R: Read + Seek> EpubDoc<R> {
             true
         }
     }
+
+    #[deprecated(note="please use `set_current_chapter` instead")]
+    pub fn set_current_page(&mut self, n: usize) -> bool {
+        self.set_current_chapter(n)
+    }
+
 
     /// This will inject arbitrary css into every queried html page 
     /// [`Self::get_current_with_epub_uris`]
